@@ -1,0 +1,131 @@
+{
+  "threats": [
+    {
+      "id": "УБИ.001",
+      "name": "Угроза несанкционированного доступа к информации в грид-системах",
+      "violator_int": ["Н2"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О2", "О6", "О13"],
+      "methods": ["СП1", "СП8"],
+      "consequences": ["П2", "П14"],
+      "tactics": ["Т2"],
+      "techniques": ["Т2.5"],
+      "exclusion_note": "Грид не используется",
+      "exclusion_flags": {
+        "requires_grid": true
+      }
+    },
+    {
+      "id": "УБИ.002",
+      "name": "Угроза перехвата данных в сетях",
+      "violator_int": ["Н2", "Н3"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О2", "О5", "О16"],
+      "methods": ["СП2", "СП6"],
+      "consequences": ["П2", "П14"],
+      "tactics": ["Т6"],
+      "techniques": ["Т6.3"],
+      "exclusion_note": null,
+      "exclusion_flags": {}
+    },
+    {
+      "id": "УБИ.003",
+      "name": "Угроза модификации программного обеспечения",
+      "violator_int": ["Н2", "Н3", "Н4"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О6", "О7"],
+      "methods": ["СП3", "СП9"],
+      "consequences": ["П3", "П12", "П15"],
+      "tactics": ["Т7"],
+      "techniques": ["Т7.27"],
+      "exclusion_note": null,
+      "exclusion_flags": {}
+    },
+    {
+      "id": "УБИ.010",
+      "name": "Угроза при внешней ответственности за инфраструктуру",
+      "violator_int": [],
+      "violator_ext": ["Н2"],
+      "objects": ["О2", "О13"],
+      "methods": ["СП1", "СП2"],
+      "consequences": ["П2", "П14"],
+      "tactics": ["Т2"],
+      "techniques": ["Т2.5"],
+      "exclusion_note": "Ответственность на ООО «Кортэл»",
+      "exclusion_flags": {
+        "external_responsibility": true
+      }
+    },
+    {
+      "id": "УБИ.011",
+      "name": "Угроза атаки через Wi-Fi сети",
+      "violator_int": ["Н3"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О2", "О5", "О16"],
+      "methods": ["СП1", "СП2", "СП6"],
+      "consequences": ["П2", "П14"],
+      "tactics": ["Т6"],
+      "techniques": ["Т6.3"],
+      "exclusion_note": "Wi-Fi не используется",
+      "exclusion_flags": {
+        "requires_wifi": true
+      }
+    },
+    {
+      "id": "УБИ.040",
+      "name": "Угроза утечки данных из облачных сервисов",
+      "violator_int": [],
+      "violator_ext": ["Н2"],
+      "objects": ["О1", "О13"],
+      "methods": ["СП1", "СП2"],
+      "consequences": ["П1", "П2"],
+      "tactics": ["Т2"],
+      "techniques": ["Т2.5"],
+      "exclusion_note": "Требуется трансграничная передача",
+      "exclusion_flags": {
+        "requires_cloud": true,
+        "transborder": true
+      }
+    },
+    {
+      "id": "УБИ.184",
+      "name": "Угроза компрометации мобильных устройств",
+      "violator_int": ["Н3", "Н4"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О10"],
+      "methods": ["СП1", "СП9"],
+      "consequences": ["П2", "П14", "П15"],
+      "tactics": ["Т7"],
+      "techniques": ["Т7.27"],
+      "exclusion_note": "Мобильные устройства не используются",
+      "exclusion_flags": {
+        "requires_mobile": true
+      }
+    },
+    {
+      "id": "УБИ.223",
+      "name": "Угроза атаки на контейнеры Docker",
+      "violator_int": ["Н2"],
+      "violator_ext": ["Н2", "Н3"],
+      "objects": ["О15"],
+      "methods": ["СП1", "СП8"],
+      "consequences": ["П14"],
+      "tactics": ["Т7"],
+      "techniques": ["Т7.27"],
+      "exclusion_note": "Docker не используется",
+      "exclusion_flags": {
+        "requires_docker": true
+      }
+    }
+  ],
+  "tactics": [
+    {"code": "Т2", "name": "Разведка"},
+    {"code": "Т6", "name": "Перехват данных"},
+    {"code": "Т7", "name": "Атака на ПО"}
+  ],
+  "techniques": [
+    {"code": "Т2.5", "name": "Сканирование уязвимостей"},
+    {"code": "Т6.3", "name": "Анализ сетевого трафика"},
+    {"code": "Т7.27", "name": "Эксплуатация уязвимостей приложений"}
+  ]
+}

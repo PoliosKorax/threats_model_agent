@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Шаг 2: Нарушители - Генератор моделей угроз ФСТЭК{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">👥 Шаг 2: Нарушители</h2>
+        
+        <form hx-post="/api/wizard/step2" 
+              hx-swap="outerHTML"
+              hx-indicator="#loading-spinner"
+              class="space-y-6">
+            
+            <!-- Внешние нарушители -->
+            <div class="border-b pb-4">
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">Внешние нарушители</h3>
+                
+                <p class="text-sm text-gray-600 mb-4">Выберите типы внешних нарушителей, которые могут представлять угрозу:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="hackers" name="external_types" value="hackers"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="hackers" class="text-gray-700">Хакеры / Хактивисты</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="criminal_groups" name="external_types" value="criminal_groups"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="criminal_groups" class="text-gray-700">Преступные группы</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="competitors" name="external_types" value="competitors"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="competitors" class="text-gray-700">Конкуренты</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="former_employees" name="external_types" value="former_employees"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="former_employees" class="text-gray-700">Бывшие сотрудники</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="vendors" name="external_types" value="vendors"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="vendors" class="text-gray-700">Поставщики / Подрядчики</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="isp" name="external_types" value="isp"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="isp" class="text-gray-700">Провайдеры услуг (ISP)</label>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <label for="external_level" class="block text-sm font-medium text-gray-700 mb-2">
+                        Уровень возможностей внешних нарушителей:
+                    </label>
+                    <select id="external_level" name="external_level" 
+                            class="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Не указано</option>
+                        <option value="Н1">Н1 - Высокий уровень (государственные структуры, организованные группы)</option>
+                        <option value="Н2">Н2 - Средний уровень (квалифицированные специалисты)</option>
+                        <option value="Н3">Н3 - Низкий уровень (начинающие хакеры)</option>
+                        <option value="Н4">Н4 - Минимальный уровень (рядовые пользователи)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Внутренние нарушители -->
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">Внутренние нарушители</h3>
+                
+                <p class="text-sm text-gray-600 mb-4">Выберите типы внутренних нарушителей:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="users" name="internal_types" value="users"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="users" class="text-gray-700">Пользователи системы</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="admins" name="internal_types" value="admins"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="admins" class="text-gray-700">Администраторы</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="isp_internal" name="internal_types" value="isp_internal"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="isp_internal" class="text-gray-700">Сотрудники провайдеров</label>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="vendors_internal" name="internal_types" value="vendors_internal"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <label for="vendors_internal" class="text-gray-700">Сотрудники подрядчиков</label>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <label for="internal_level" class="block text-sm font-medium text-gray-700 mb-2">
+                        Уровень возможностей внутренних нарушителей:
+                    </label>
+                    <select id="internal_level" name="internal_level" 
+                            class="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Не указано</option>
+                        <option value="Н1">Н1 - Высокий уровень (привилегированный доступ)</option>
+                        <option value="Н2">Н2 - Средний уровень (квалифицированные сотрудники)</option>
+                        <option value="Н3">Н3 - Низкий уровень (рядовые сотрудники)</option>
+                        <option value="Н4">Н4 - Минимальный уровень (ограниченный доступ)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Кнопки навигации -->
+            <div class="flex justify-between pt-4 border-t">
+                <a href="/api/wizard/step/1" 
+                   class="text-gray-600 hover:text-gray-800 font-semibold py-2 px-6 transition flex items-center space-x-2">
+                    <span>← Назад</span>
+                </a>
+                <button type="submit" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                    <span>Далее →</span>
+                    <span id="loading-spinner" class="htmx-indicator">
+                        <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

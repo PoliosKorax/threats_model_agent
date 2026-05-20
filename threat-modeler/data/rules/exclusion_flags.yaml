@@ -1,0 +1,66 @@
+# Флаги исключений для угроз (Таблица 10 ФСТЭК)
+# Формат: УБИ.ID: [список флагов]
+
+УБИ.001:
+  - requires_grid
+
+УБИ.010:
+  - external_responsibility
+
+УБИ.011:
+  - requires_wifi
+
+УБИ.029:
+  - requires_grid
+
+УБИ.040:
+  - requires_cloud
+  - transborder
+
+УБИ.081:
+  - requires_grid
+
+УБИ.106:
+  - requires_supercomputer
+
+УБИ.184:
+  - requires_mobile
+
+УБИ.199:
+  - requires_mobile
+
+УБИ.202:
+  - requires_mobile
+
+УБИ.216:
+  - requires_smartcard
+
+УБИ.218:
+  - requires_ml
+
+УБИ.219:
+  - requires_ml
+
+УБИ.220:
+  - requires_ml
+
+УБИ.221:
+  - requires_ml
+
+УБИ.222:
+  - requires_ml
+
+УБИ.223:
+  - requires_docker
+
+УБИ.224:
+  - requires_docker
+
+УБИ.225:
+  - requires_docker
+
+УБИ.226:
+  - requires_docker
+
+УБИ.227:
+  - requires_docker
