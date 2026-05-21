@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Шаг 5: Отчёт - Генератор моделей угроз ФСТЭК{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">📊 Шаг 5: Предпросмотр отчёта</h2>
+        
+        <p class="text-gray-600 mb-6">
+            Сгенерированный перечень угроз безопасности информации. Вы можете экспортировать результат в Excel.
+        </p>
+        
+        <!-- Кнопки действий -->
+        <div class="flex space-x-4 mb-6">
+            <a href="/api/reports/generate" 
+               target="_blank"
+               class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>Скачать Excel</span>
+            </a>
+            
+            <button onclick="window.print()"
+                    class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                <span>Печать</span>
+            </button>
+            
+            <a href="/" 
+               class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>Начать заново</span>
+            </a>
+        </div>
+        
+        <!-- Таблица угроз (заглушка, будет заполнена через API) -->
+        <div class="border rounded-lg overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">УБИ</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Наименование</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Объекты</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Методы</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Последствия</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="threats-table-body">
+                    <tr>
+                        <td colspan="5" class="px-4 py-8 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <svg class="animate-spin h-8 w-8 text-blue-600 mb-3" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <p>Загрузка угроз...</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Навигация -->
+        <div class="flex justify-between pt-6 border-t mt-6">
+            <a href="/api/wizard/step/4" 
+               class="text-gray-600 hover:text-gray-800 font-semibold py-2 px-6 transition flex items-center space-x-2">
+                <span>← Назад к объектам</span>
+            </a>
+            <div></div>
+        </div>
+    </div>
+    
+    <!-- Информация о профиле -->
+    <div class="mt-6 bg-blue-50 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-blue-800 mb-3">📋 Ваш профиль системы</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-700" id="profile-summary">
+            <p>Загрузка информации о профиле...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Загрузка угроз через HTMX
+document.addEventListener('DOMContentLoaded', function() {
+    // Здесь можно добавить AJAX запрос для загрузки угроз
+    // Пока заглушка
+    console.log('Step 5 loaded');
+});
+</script>
+{% endblock %}

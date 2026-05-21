@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Шаг 4: Объекты - Генератор моделей угроз ФСТЭК{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">🎯 Шаг 4: Объекты и технологии</h2>
+        
+        <p class="text-gray-600 mb-6">
+            Выберите объекты воздействия, которые присутствуют в системе:
+        </p>
+        
+        <form hx-post="/api/wizard/step4" 
+              hx-swap="outerHTML"
+              hx-indicator="#loading-spinner"
+              class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for object in objects %}
+                <div class="border rounded-lg p-4 hover:shadow-md transition cursor-pointer"
+                     onclick="toggleCheckbox(this)">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="obj_{{ object.code }}" 
+                               name="selected_objects" 
+                               value="{{ object.code }}"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 pointer-events-none">
+                        <div>
+                            <label for="obj_{{ object.code }}" 
+                                   class="font-semibold text-gray-700 pointer-events-none">
+                                {{ object.code }}
+                            </label>
+                            <p class="text-sm text-gray-500 pointer-events-none">
+                                {{ object.name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Выделение всех -->
+            <div class="flex justify-center space-x-4 pt-4 border-t">
+                <button type="button" 
+                        onclick="selectAll()"
+                        class="text-blue-600 hover:text-blue-800 font-medium transition">
+                    Выделить все
+                </button>
+                <span class="text-gray-300">|</span>
+                <button type="button" 
+                        onclick="deselectAll()"
+                        class="text-gray-600 hover:text-gray-800 font-medium transition">
+                    Снять выделение
+                </button>
+            </div>
+            
+            <!-- Кнопки навигации -->
+            <div class="flex justify-between pt-4 border-t">
+                <a href="/api/wizard/step/3" 
+                   class="text-gray-600 hover:text-gray-800 font-semibold py-2 px-6 transition flex items-center space-x-2">
+                    <span>← Назад</span>
+                </a>
+                <button type="submit" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                    <span>К отчёту →</span>
+                    <span id="loading-spinner" class="htmx-indicator">
+                        <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleCheckbox(element) {
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    if (event.target !== checkbox) {
+        checkbox.checked = !checkbox.checked;
+    }
+}
+
+function selectAll() {
+    document.querySelectorAll('input[name="selected_objects"]').forEach(cb => cb.checked = true);
+}
+
+function deselectAll() {
+    document.querySelectorAll('input[name="selected_objects"]').forEach(cb => cb.checked = false);
+}
+</script>
+{% endblock %}

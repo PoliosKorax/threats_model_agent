@@ -1,0 +1,96 @@
+# Базовый шаблон HTML с подключением HTMX и TailwindCSS
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Генератор моделей угроз ФСТЭК{% endblock %}</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- HTMX CDN -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
+    <!-- Кастомные стили -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <style>
+        /* Анимация загрузки для HTMX */
+        .htmx-indicator {
+            display: none;
+        }
+        .htmx-request .htmx-indicator {
+            display: inline-block;
+        }
+        .htmx-request.htmx-indicator {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-xl font-bold">🛡️ Генератор моделей угроз ФСТЭК</h1>
+                <nav class="space-x-4">
+                    <a href="/" class="hover:text-blue-200 transition">Главная</a>
+                    <a href="#help" class="hover:text-blue-200 transition">Помощь</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    {% if step %}
+    <div class="bg-white shadow">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600">Шаг {{ step }} из 5</span>
+                <div class="flex-1 mx-4">
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                             style="width: {{ (step / 5) * 100 }}%"></div>
+                    </div>
+                </div>
+                <span class="text-sm text-gray-600">{{ ((step / 5) * 100)|round|int }}%</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <div class="text-center text-sm">
+                <p>&copy; 2024 Генератор моделей угроз ФСТЭК. Локальное приложение.</p>
+                <p class="mt-2 text-gray-500">Соответствует методике ФСТЭК 2021</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипты -->
+    <script>
+        // Обработка ошибок HTMX
+        document.body.addEventListener('htmx:responseError', function(evt) {
+            alert('Ошибка: ' + evt.detail.xhr.statusText);
+        });
+        
+        // Автофокус на первом поле формы
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstInput = document.querySelector('input:not([type="hidden"]), select, textarea');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        });
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Шаг 3: Интерфейсы - Генератор моделей угроз ФСТЭК{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">🔗 Шаг 3: Интерфейсы</h2>
+        
+        <p class="text-gray-600 mb-6">
+            Выберите интерфейсы и каналы доступа, которые используются в системе:
+        </p>
+        
+        <form hx-post="/api/wizard/step3" 
+              hx-swap="outerHTML"
+              hx-indicator="#loading-spinner"
+              class="space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Веб-интерфейсы -->
+                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="web" name="interfaces" value="web"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div>
+                            <label for="web" class="font-semibold text-gray-700">Веб-интерфейсы</label>
+                            <p class="text-sm text-gray-500">HTTP/HTTPS, веб-приложения, порталы</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Удалённый доступ -->
+                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="remote_desktop" name="interfaces" value="remote_desktop"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div>
+                            <label for="remote_desktop" class="font-semibold text-gray-700">Удалённый доступ</label>
+                            <p class="text-sm text-gray-500">RDP, SSH, VNC, Telnet</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VPN-туннели -->
+                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="vpn" name="interfaces" value="vpn"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div>
+                            <label for="vpn" class="font-semibold text-gray-700">VPN-туннели</label>
+                            <p class="text-sm text-gray-500">IPsec, OpenVPN, L2TP</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Физический доступ -->
+                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="physical" name="interfaces" value="physical"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div>
+                            <label for="physical" class="font-semibold text-gray-700">Физический доступ</label>
+                            <p class="text-sm text-gray-500">Непосредственный доступ к оборудованию</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Беспроводные сети -->
+                <div class="border rounded-lg p-4 hover:shadow-md transition">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="wireless" name="interfaces" value="wireless"
+                               class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div>
+                            <label for="wireless" class="font-semibold text-gray-700">Беспроводные сети</label>
+                            <p class="text-sm text-gray-500">Wi-Fi, Bluetooth, NFC</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Кнопки навигации -->
+            <div class="flex justify-between pt-4 border-t">
+                <a href="/api/wizard/step/2" 
+                   class="text-gray-600 hover:text-gray-800 font-semibold py-2 px-6 transition flex items-center space-x-2">
+                    <span>← Назад</span>
+                </a>
+                <button type="submit" 
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition flex items-center space-x-2">
+                    <span>Далее →</span>
+                    <span id="loading-spinner" class="htmx-indicator">
+                        <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
